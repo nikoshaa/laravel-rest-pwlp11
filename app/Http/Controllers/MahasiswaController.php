@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\MahasiswaResource;
 use Illuminate\Http\Request;
+use App\Http\Resources\MahasiswaResource;
+use App\Models\Mahasiswa;
+use App\Http\Requests\StoreMahasiswaRequests;
+use App\Http\Requests\UpdateMahasiswaRequest;
 
 class MahasiswaController extends Controller
 {
@@ -12,7 +15,7 @@ class MahasiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index()
+    public function index()
     {
         return MahasiswaResource::collection(Mahasiswa::paginate(5));
     }
@@ -33,7 +36,7 @@ class MahasiswaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store(StoreMahasiswaRequests $request)
+    public function store(StoreMahasiswaRequests $request)
     {
         // return response() ->json('hello');
         return new MahasiswaResource(Mahasiswa::create(
@@ -58,7 +61,6 @@ class MahasiswaController extends Controller
     public function show(Mahasiswa $mahasiswa)
     {
         return new MahasiswaResource($mahasiswa);
-        
     }
 
     /**
@@ -79,7 +81,7 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function update(UpdateMahasiswaRequest $request, Mahasiswa $mahasiswa)
+    public function update(UpdateMahasiswaRequest $request, Mahasiswa $mahasiswa)
     {
         $mahasiswa->update([
             'Nim'=>$request->Nim,
@@ -97,8 +99,9 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa -> delete();
+        return response() -> noContent();
     }
 }
