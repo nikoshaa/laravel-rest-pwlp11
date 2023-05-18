@@ -26,3 +26,5 @@ Route::get('/hello', function() {
 Route::get('/hello', function() {
     return 'hello world';
 });
+
+Route::apiResource('/mahasiswa', MahasiswaController::class);
